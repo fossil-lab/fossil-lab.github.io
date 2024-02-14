@@ -4,30 +4,164 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fossil Codelabs</title>
-    <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      margin: 0;
+      padding: 0;
+      background-color: #1a1a1a; /* Dark gray background */
+      color: #add8e6; /* Light blue text */
+    }
+
+    header {
+      text-align: center;
+      padding: 20px;
+      background-color: #333;
+      color: #ffa500; /* Orange h1 text color */
+      display: flex; /* Add flex container to header */
+      justify-content: flex-start; /* Move items to the start of the flex container */
+      align-items: center; /* Center items vertically in the flex container */
+    }
+
+    .mpl-licensed {
+      background-color: #c0e218; /* Apply a background color for MPL 2.0 licensed rows */
+    }
+
+    .header img {
+      margin-right: 10px; /* Add margin to the right of the logo for spacing */
+    }
+
+    .menu {
+      display: flex;
+      justify-content: space-around;
+      background-color: #333;
+    }
+
+    .menu ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .menu li {
+      display: inline;
+      margin: 10px;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: #add8e6;
+    }
+
+    .menu a:hover {
+      border-bottom: 2px solid #add8e6;
+    }
+
+    .search-container {
+      text-align: center;
+      padding: 15px;
+    }
+
+    .dashboard {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 20px;
+    }
+
+    /* Table Styles */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    .data-table th, .data-table td {
+      padding: 12px;
+      border: 1px solid #555;
+      text-align: left;
+    }
+
+    .data-table th {
+      background-color: #555;
+      color: #ffa500; /* Orange text color */
+    }
+
+    /* Text color updated to light blue */
+    .tile-body {
+      color: #3498db;
+    }
+
+    /* Responsive Table Styles */
+    @media (max-width: 768px) {
+      .data-table th {
+        display: none;
+      }
+
+      .data-table td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        text-align: left;
+      }
+
+      /* Optional: Add some styling to each table row on small screens */
+      .data-table tr {
+        margin-bottom: 10px;
+        background-color: #f9f9f9; /* Light gray background color for rows */
+        border: 1px solid #ddd;
+        padding: 10px;
+        border-radius: 8px;
+      }
+
+      .menu {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      nav ul {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px;
+      }
+
+      nav ul li {
+        margin: 0;
+        margin-bottom: 10px;
+      }
+
+      .tile {
+        width: calc(50% - 20px);
+      }
+    }
+  </style>
 </head>
 <body>
 
-<h2>Fossil Codelab Dashboard</h2>
-<input type="text" id="searchInput" placeholder="Search by Project Name" oninput="filterTable()">
-<table id="repoTable">
-  <thead>
-    <tr>
-      <th>Project Name</th>
-      <th>Description</th>
-      <th>Author</th>
-      <th>Language</th>
-      <th>Project Link</th>
-      <th>Wiki Link</th>
-      <th>Latest Version</th>
-    </tr>
-  </thead>
-  <tbody id="repoBody"></tbody>
-</table>
+  <header>
+    <h1>Fossil Codelab Dashboard</h1>
+  </header>
 
-<script>
+  <input type="text" id="searchInput" placeholder="Search by Project Name" oninput="filterTable()">
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Project Name</th>
+        <th>Description</th>
+        <th>Author</th>
+        <th>Language</th>
+        <th>Project Link</th>
+        <th>Home Page</th>
+        <th>Latest Version</th>
+      </tr>
+    </thead>
+    <tbody id="repoBody"></tbody>
+  </table>
+
+  <script>
   const orgName = 'fossil-lab';
-  const excludedRepos = ['.github', 'fossil-lab', 'fossil-lab.github.io'];
+  const excludedRepos = ['.github', 'fossil-lab.github.io'];
 
   async function fetchRepos() {
     try {
