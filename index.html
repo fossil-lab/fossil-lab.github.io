@@ -92,7 +92,6 @@
           <strong>Wiki Link:</strong> <a href="${sanitize(repoDetails.html_url)}/wiki" target="_blank">Wiki</a><br>
           <strong>Project Home Page:</strong> <a href="${sanitize(repoDetails.html_url)}" target="_blank">Homepage</a><br>
           <strong>Project Description:</strong> ${sanitize(repoDetails.description)}<br>
-          <strong>Latest Release:</strong> ${repoDetails.latest_release ? sanitize(repoDetails.latest_release.tag_name) : 'N/A'}<br>
         </div>
       `;
 
